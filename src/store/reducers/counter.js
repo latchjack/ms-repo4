@@ -1,8 +1,7 @@
-import * as actionTypes from './actions';
+import * as actionTypes from '../actions';
 
 const initialState = {
-  counter: 0,
-  results: []
+  counter: 0
 }
 
 const reducer = (state = initialState, action) => {
@@ -26,34 +25,9 @@ const reducer = (state = initialState, action) => {
         ...state,
         counter: state.counter - action.value
       }
-    case actionTypes.STORE_RESULT:
-      return {
-        ...state,
-        results: state.results.concat({id: new Date(), value: state.counter}) 
-        // concat is just like push(), except push adjusts the original array and concat creates a new array with the added value.
-      }
-    case actionTypes.DELETE_RESULT:
-      // const id = 2; // OPTION 1
-      // const newArray = [...state.results];
-      // newArray.splice(id, 1)
-      const newArray = state.results.filter(result => result.id !== action.resultElementId); // return true if that index is unequal to the index of the result you want to remove
-      return {
-        ...state,
-        results: newArray 
-      }
     default:
       return state;
   }
 }
 
 export default reducer;
-
-/*
-In the DELETE_RESULT case. Using splice would affect the original array
-and would not be immutable.
-
-const id = 2;
-state.results.splice(id, 1)
-
-The filter method will return a new array
-*/
