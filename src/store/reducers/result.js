@@ -5,23 +5,25 @@ const initialState = {
   results: []
 }
 
+const deleteResult = (state, action) => {
+  // return true if that index is unequal to the index of the result you want to remove
+  const newArray = state.results.filter(result => result.id !== action.resultElementId); 
+  return updateObject(state, {results: newArray});
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    // concat is just like push(), except push adjusts the original array and concat creates a new array with the added value.
     case actionTypes.STORE_RESULT:
       return updateObject(state, {results: state.results.concat({id: new Date(), value: action.result})})
-        // concat is just like push(), except push adjusts the original array and concat creates a new array with the added value.
     case actionTypes.DELETE_RESULT:
-      // const id = 2; // OPTION 1
-      // const newArray = [...state.results];
-      // newArray.splice(id, 1)
-      const newArray = state.results.filter(result => result.id !== action.resultElementId); // return true if that index is unequal to the index of the result you want to remove
-      return updateObject(state, {results: newArray}) 
+      return deleteResult(state, action);
     default:
       return state;
   }
 }
-
-export default reducer;
+      
+      export default reducer;
 
 /*
 In the DELETE_RESULT case. Using splice would affect the original array
