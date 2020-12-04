@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import { updateObject } from '../utility';
 
 const initialState = {
   results: []
@@ -7,20 +8,14 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.STORE_RESULT:
-      return {
-        ...state,
-        results: state.results.concat({id: new Date(), value: action.result}) 
+      return updateObject(state, {results: state.results.concat({id: new Date(), value: action.result})})
         // concat is just like push(), except push adjusts the original array and concat creates a new array with the added value.
-      }
     case actionTypes.DELETE_RESULT:
       // const id = 2; // OPTION 1
       // const newArray = [...state.results];
       // newArray.splice(id, 1)
       const newArray = state.results.filter(result => result.id !== action.resultElementId); // return true if that index is unequal to the index of the result you want to remove
-      return {
-        ...state,
-        results: newArray 
-      }
+      return updateObject(state, {results: newArray}) 
     default:
       return state;
   }
